@@ -1,0 +1,103 @@
+using UnityEngine;
+using System.Collections;
+
+public class Emoji : MonoBehaviour {
+
+	public GameObject emoji1;
+	public GameObject emoji2;
+	public GameObject emoji3;
+	public GameObject emoji4;
+	public GameObject emoji5;
+	public GameObject emoji6;
+
+	public GameObject semiTruck;
+
+	public int moveTruck = 0;
+	public float moveSpeed = -0.2f;
+	//public AudioClip audio;
+
+	void Awake () {
+		emoji1.GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0f);
+		emoji2.GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0f);
+		emoji3.GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0f);
+		emoji4.GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0f);
+		emoji5.GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0f);
+		emoji6.GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0f);
+	}
+
+	void Start () {
+		StartCoroutine(EmojiRoutine());
+	}
+
+	IEnumerator EmojiRoutine () {
+
+		//Spawn First Emoji //10 on top cam //2 on preview cam
+		yield return new WaitForSeconds(15f);
+		Debug.Log("Swap Out Graphic");
+		emoji1.GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+		GetComponent<AudioSource>().Play();
+
+		//Spawn Second Emoji
+		yield return new WaitForSeconds(2.3f);
+		Debug.Log("Swap Out Graphic");
+		emoji2.GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+
+		//Remove First Emoji
+		yield return new WaitForSeconds(1.5f);
+		emoji1.GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0f);
+
+		//Spawn Fourth Emoji
+		yield return new WaitForSeconds(3.9f);
+		emoji4.GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 1f);
+
+		//Remove Second Emoji
+		yield return new WaitForSeconds(1.0f);
+		emoji2.GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0f);
+
+		//Spawn Third Emoji
+		yield return new WaitForSeconds(1.5f);
+		emoji3.GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 1f);
+
+		//Remove Fourth Emoji
+		yield return new WaitForSeconds(1.0f);
+		emoji4.GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0f);
+
+		//Remove Third Emoji
+		yield return new WaitForSeconds(3.85f);
+		emoji3.GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0f);
+
+		//Spawn Fifth Emoji
+		yield return new WaitForSeconds(0.1f);
+		emoji5.GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 1f);
+
+		//Remove Fifth Emoji
+		yield return new WaitForSeconds(4.5f);
+		emoji5.GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0f);
+
+		//Spawn Last Emoji
+		yield return new WaitForSeconds(1f);
+		emoji6.GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 1f);
+
+		//Remove Last Emoji
+		yield return new WaitForSeconds(2f);
+		emoji6.GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0f);
+
+		//Move Semi Truck
+		yield return new WaitForSeconds(1.5f);
+		moveTruck = 1;
+
+	}
+	void Update() {
+		if(moveTruck == 1) {
+			semiTruck.transform.position += new Vector3(moveSpeed,0,0);
+		}
+
+		if (semiTruck.transform.position.x <= -150 ) {
+			moveSpeed = 0;
+            int Index = UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex + 1;
+            UnityEngine.SceneManagement.SceneManager.LoadScene(Index);
+
+        }
+    }
+
+}
